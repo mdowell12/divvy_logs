@@ -57,5 +57,6 @@ def parse_stations(station_list, stations=None):
 
 
 if __name__ == "__main__":
-    print return_selected_data()
-    # print fetch()
+    data = return_selected_data()
+    print data[0]
+
