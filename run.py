@@ -2,6 +2,7 @@ import json
 
 from divvy_logs import divvy
 from divvy_logs import database
+from divvy_logs import utils
 
 
 def format_for_availabilities(data, queried_at):
@@ -34,14 +35,13 @@ def format_for_station_blobs(data, queried_at):
 
 
 def main():
-    queried_at = database.current_time_in_seconds()
+    queried_at = utils.current_time_in_seconds()
     data = divvy.return_selected_data()
 
     print "Inserting availability data."
     formatted_availability_data = format_for_availabilities(data, queried_at)
     for row in formatted_availability_data:
         database.insert_to_availabilities(row)
-
 
     print "Inserting blob data."
     formatted_blobs = format_for_station_blobs(data, queried_at)
