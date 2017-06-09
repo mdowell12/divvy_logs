@@ -1,3 +1,4 @@
+*/secret.py
 *.db
 *.pyc
 venv
