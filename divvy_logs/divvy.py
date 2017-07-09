@@ -1,4 +1,8 @@
-import json
+"""
+Fetch data from Divvy API.
+
+Do basic parsing, return json.
+"""
 import requests
 
 
@@ -44,7 +48,7 @@ def parse_stations(station_list, stations=None):
 
     if stations is None:
         stations = DEFAULT_STATION_NAMES
-    
+
     selected_stations = filter(lambda x: x['stationName'] in stations, station_list)
     selected_stations_dict = {data['stationName']: data for data in selected_stations}
 
@@ -59,4 +63,3 @@ def parse_stations(station_list, stations=None):
 if __name__ == "__main__":
     data = return_selected_data()
     print data[0]
-
