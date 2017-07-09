@@ -30,3 +30,15 @@ def insert_to_station_blobs(row):
                          "selected: {}".format(DATABASE_BACKEND))
 
     return func(row)
+
+
+def read_availabilities_data(*args, **kwargs):
+    if DATABASE_BACKEND == SQLITE_CONST:
+        raise NotImplementedError("This has not been implemented for SQLITE.")
+    elif DATABASE_BACKEND == POSTGRES_CONST:
+        func = postgres.read_availabilities_data
+    else:
+        raise ValueError("Invalid database backend "
+                         "selected: {}".format(DATABASE_BACKEND))
+
+    return func(*args, **kwargs)

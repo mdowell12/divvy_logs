@@ -51,6 +51,16 @@ INSERT_TO_BLOBS_QUERY = """
     ) VALUES (%s,%s,%s);
 """
 
+READ_AVAILABILITIES_QUERY = """
+    SELECT inserted_at,
+           queried_at,
+           station_name,
+           available_docks,
+           available_bikes,
+           total_docks
+    FROM availabilities;
+"""
+
 
 def insert_to_availabilities(row):
     conn = _get_connection()
@@ -106,6 +116,26 @@ def setup_with_idempotency():
     finally:
         cur.close()
         conn.close()
+
+
+def read_availabilities_data(start=None, finish=None):
+    """
+    Read data from availabilities table for range 'start' to 'finish'.
+    Defaults to reading whole table.
+
+    :param start: datetime obj
+    :param finish: datetime obj
+    :return: dict
+    """
+    if start is not None or finish is not None:
+        raise NotImplementedError("Range filtering not yet supported.")
+
+    with _get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(READ_AVAILABILITIES_QUERY)
+            data = cur.fetchall()
+
+    return data
 
 
 def _get_connection():
